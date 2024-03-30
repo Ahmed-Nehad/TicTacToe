@@ -1,13 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@900&family=Rubik+Mono+One&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Lato", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@keyframes resize {
+  50% { scale:110% }
+}
+
+.logo {
+  /* animation: resize 3s linear infinite; */
+  /* rotate: 12deg; */
+  @apply rotate-12
+}
+
+.logo .xo {
+  font-family: "Rubik Mono One", monospace;
+  line-height: 160px;
+  @apply text-[#f10142] text-[10rem]
+}
+
+.logo .ox {
+  font-family: "Raleway", sans-serif;
+  line-height: 160px;
+  @apply text-[#1dc909] text-[11rem]
+}
+
+
+.ff {
+  box-shadow: inset 0 0 10px 6px #00000040;
+  border-width: 1px;
+}
+
+.x {
+  @apply after:content-["X"] after:text-[#f10142] font-extrabold after:!scale-100
+}
+
+.o {
+  @apply after:content-["O"] after:text-[#1dc909] font-extrabold after:!scale-100
+}
+
+.no {
+  @apply cursor-not-allowed
+}
+
+.win {
+  @apply bg-[#1dc909] !text-white after:!text-white
+}
+
+.p {
+  transition-timing-function: cubic-bezier(0.92,0.02,1,1);
+  animation-duration: 75ms;
+  font-weight: 800;
+  /* scale: 250%; */
+  font-size: 3.5rem;
+  position: absolute;
+  top: -50%;
+}
+
+.po {
+  transition-timing-function: cubic-bezier(0.92,0.02,1,1);
+  animation-duration: 75ms;
+  font-weight: 800;
+  font-size: 3.5rem;
+  /* position: absolute;
+  top: -50%; */
+}
+
+.pb {
+  /* font-size: 4rem !important; */
+}
+
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
