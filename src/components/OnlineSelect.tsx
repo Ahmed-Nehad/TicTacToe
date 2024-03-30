@@ -6,8 +6,7 @@ const OnlineSelect = ({ setShow, connect, disconnect, waiting, playClickSound }:
   const [socket, setSocket] = useState<Socket>();
   const start = () => {
     playClickSound();
-    if (!name) return;
-    const ssocket = connect(name);
+    const ssocket = connect(name || "Guest");
     setSocket(ssocket);
   }
   const stop = () => disconnect(socket);
