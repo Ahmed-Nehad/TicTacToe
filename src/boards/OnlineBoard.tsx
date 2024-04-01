@@ -40,13 +40,13 @@ const BoardOnline = ({ volumeData, setShow, playClickSound, start, SocketData }:
     const lastVal = useRef('X');
 
     useEffect(() => {
-        socketData.socket.on('re', ({ id, p1, p2, start }) => {
+        socketData.socket.on('re', ({ id, p1, p2 }) => {
             setSocketData(prev => ({ ...prev, name1: p1.name, name2: p2.name, id }));
             setBoard(Array(9).fill(''));
             setScores([0, 0]);
             setWinner([]);
-            canPlay.current = start;
-            myturn.current = start;
+            canPlay.current = false;
+            myturn.current = false;
             lastVal.current = 'X';
         });
 

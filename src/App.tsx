@@ -36,7 +36,7 @@ function App() {
     socket.emit("join", name);
     setWaiting(true);
     socket.on('ready', ({ id, p1, p2 }: { id: string; p1: { name: string; id: string }; p2: { name: string; id: string } }) => {
-      setSockeData(prev => ({ ...prev, start: name === p1.name, name1: p1.name, name2: p2.name, id }));
+      setSockeData(prev => ({ ...prev, start: socket.id === p1.id, name1: p1.name, name2: p2.name, id }));
       setShowOnlineBoard(true);
     });
     socket.on('dis', () => {

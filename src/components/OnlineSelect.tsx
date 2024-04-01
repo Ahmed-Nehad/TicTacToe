@@ -15,7 +15,7 @@ const OnlineSelect = ({ setShow, connect, disconnect, waiting, playClickSound }:
     <div className="fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-50">
       <div className="left-1/2 -translate-x-1/2 bg-[#3e54c4] z-10 absolute top-1/2 border-2 border-blue-950 ff -translate-y-1/2 rounded-xl min-w-64 p-6">
         <button onClick={() => {playClickSound(); stop(); setShow(false) }} className='absolute top-0 left-0 bg-red-500 rounded-full h-10 w-10 ff border-none text-white -translate-y-1/2 -translate-x-1/2 font-bold' ><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Menu / Close_SM"> <path id="Vector" d="M16 16L12 12M12 12L8 8M12 12L16 8M12 12L8 16" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g> </g></svg></button>
-        <input className='bg-black bg-opacity-20 text-white p-3 rounded-xl ff border-none w-full' onChange={e => setName(e.target.value)} value={name} type="text" placeholder='your name...' />
+        <input className='bg-black bg-opacity-20 text-white p-3 rounded-xl ff border-none w-full' onChange={e => setName(e.target.value)} type="text" placeholder='your name...' />
         <button onClick={() => {playClickSound(); waiting ? stop() : start()}} className={`ff border-none rounded-full bg-[#d62a8c] text-white text-xl py-3 w-full mt-4 drop-shadow-lg ${waiting && "!bg-gray-500 !px-0 w-72"}`}>{
           waiting ? (<>
             <svg aria-hidden="true" role="status" className="inline w-7 h-7 me-3 text-indigo-500 animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
