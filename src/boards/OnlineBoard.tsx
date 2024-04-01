@@ -4,6 +4,7 @@ import useSound from 'use-sound';
 import Nav from '../components/Nav';
 import Timer from '../components/Timer';
 import Tiles from './Tiles';
+import FakeTimer from '../components/FakeTimer';
 
 const endSound = require('../sounds/gameover.mp3');
 const errorSound = require('../sounds/hit.wav');
@@ -138,6 +139,7 @@ const BoardOnline = ({ volumeData, setShow, playClickSound, start, SocketData }:
                     <div className='text-white font-bold text-2xl'>{scores[0]}</div>
                 </div>
                 { myturn.current && <Timer disconnect={()=>{setShow(false, socketData.socket);}} className='absolute' children={<></>} /> }
+                { !myturn.current && <FakeTimer className='absolute' /> }
                 <div className={`bg-opacity-40 bg-black rounded-xl h-24 w-36 shadow-xl transition-all ${lastVal.current === 'O' ? 'shadow-blue-700' : ''} pb-[3px] w-[35vw] justify-end items-center relative inline-flex flex-col`}>
                     <div className="p o"></div>
                     <div className={`${lastVal.current !== 'O' && 'opacity-60'} text-white font-semibold`}>{socketData.name2}</div>
