@@ -54,10 +54,9 @@ function App() {
   return <>
     <div className={`z-20 min-h-[100vh] flex flex-col items-center justify-center overflow-hidden from-blue-800 to-60% bg-gradient-to-b to-blue-950 relative !p-0 !m-0`}>
       <Nav volumeData={volumeData} playClickSound={playClickSound} />
-      <div className="absolute top-[15vh] logo h-52 w-52">
-        <span className="xo absolute top-0 left-0">X</span>
-        <span className="ox absolute bottom-0 right-0">O</span>
-      </div> 
+      <div className="absolute top-[15vh] h-60 w-60">
+        <img src="/logo192.png" alt="logo" className="object-fill" />
+      </div>
       <div className="absolute bottom-[10vh] items-center px-10 max-w-lg mx-auto">
         <button onClick={() => { playClickSound(); setShowLevelSelect(true) }} className="bg-[#13bad7] border-[#13bad7] ff text-xl py-4 w-full text-white font-semibold rounded-full">Single Player</button>
         <button onClick={() => { playClickSound(); setDifficulty(''); setShowBoard(true) }} className="bg-[#6313d7] border-[#6313d7] ff text-xl py-4 w-full text-white font-semibold rounded-full my-4">Play with friend</button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Timer = ({ disconnect, children, className }:{ disconnect: (arg?:any) => any; children: JSX.Element; className: string }) => {
   const [time, setTime] = useState(30);
