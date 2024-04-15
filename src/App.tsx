@@ -37,9 +37,7 @@ function App() {
     const start = async () => {
       await getCoinsFromStorge();
       setCoins(getCoins());
-      await initialize()
-      // await showInterstitial(()=>{console.log("hi")})
-      // alert("hiii")
+      // await initialize()
     }
     start()
 }, [])
@@ -48,7 +46,7 @@ function App() {
   const connect = (name: string) => {
     const socket = ioConnect("https://tictactoe-backend-kvgn.onrender.com");
     setSockeData({ socket });
-    socket.emit("join", name);
+    socket.emit("join", {name, mode:''});
     setWaiting(true);
     socket.on('ready', ({ id, p1, p2 }: { id: string; p1: { name: string; id: string }; p2: { name: string; id: string } }) => {
       setSockeData(prev => ({ ...prev, start: socket.id === p1.id, name1: p1.name, name2: p2.name, id }));
