@@ -13,6 +13,10 @@ body {
   overflow: hidden;
 }
 
+button:active {
+  filter: brightness(0.6);
+}
+
 @keyframes resize {
   50% { scale:110% }
 }

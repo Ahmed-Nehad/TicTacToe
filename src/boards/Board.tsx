@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import useSound from 'use-sound';
-import Nav from '../components/Nav';
 import { easy, hard, mid, imp } from '../hooks/AI';
 import Tiles from './Tiles';
+import { addCoins } from '../hooks/coins';
 
 const endSound = require('../sounds/gameover.mp3');
 const errorSound = require('../sounds/hit.wav');
@@ -10,13 +10,13 @@ const errorSound = require('../sounds/hit.wav');
 type props = {
     difficulty: '' | 'easy' | 'mid' | 'hard' | 'imp';
     volumeData: [number, React.Dispatch<React.SetStateAction<number>>];
-    setShow: (arg: any) => void;
     playClickSound: any;
+    win: ()=> void
 };
 
 type board = ('' | 'X' | 'O')[];
 
-const Board = ({ difficulty, volumeData, setShow, playClickSound }: props) => {
+const Board = ({ difficulty, volumeData, playClickSound, win }: props) => {
 
     const [volume] = volumeData;
     const [playErrorSound] = useSound(errorSound, { volume: volume * 0.1 });
@@ -31,6 +31,10 @@ const Board = ({ difficulty, volumeData, setShow, playClickSound }: props) => {
     const lose = (player = '') => {
         canPlay.current = false;
         playGameOverSound();
+        if(player === 'X'){
+            addCoins(difficulty);
+            win();
+        }
         setTimeout(() => {
             if (player) {
                 setScores(prev => { let temp = [...prev]; temp[player === 'X' ? 0 : 1] += 1; return temp as any });
@@ -104,7 +108,6 @@ const Board = ({ difficulty, volumeData, setShow, playClickSound }: props) => {
             <div className='absolute top-0 left-0 z-20 right-0 bottom-[50%] pointer-events-none'>
                 <div className={`${(!!winner.length || board.filter(b => !!b).length === 9) && 'animate-faden'} pointer-events-none opacity-0 text-green-200 font-bold text-4xl absolute left-1/4 right-1/4 text-center`}>{!winner.length ? 'Draw' : `${lastVal.current === "O" ? "Player 1" : (difficulty ? "Computer" : "Player 2")}\n won`}</div>
             </div>
-            <Nav onClick={() => { setShow(false) }} volumeData={volumeData} playClickSound={playClickSound} />
             <div className='absolute mx-auto top-[13%] md:top-[10%]'>
                 <div className={`bg-opacity-40 shadow-xl transition-all ${lastVal.current === 'X' ? 'shadow-blue-700' : ''} bg-black rounded-xl h-24 w-[35vw] max-w-60 pb-[3px] justify-end items-center relative inline-flex flex-col mr-[10vw]`}>
                     <div className="p x"></div>
@@ -113,7 +116,7 @@ const Board = ({ difficulty, volumeData, setShow, playClickSound }: props) => {
                 </div>
                 <div className={`bg-opacity-40 bg-black rounded-xl h-24 w-36 shadow-xl transition-all ${lastVal.current === 'O' ? 'shadow-blue-700' : ''} pb-[3px] w-[35vw] max-w-60 justify-end items-center relative inline-flex flex-col`}>
                     <div className="p o"></div>
-                    <div className={`${lastVal.current !== 'O' && 'opacity-60'} text-white font-semibold`}>{difficulty ? "Computer" : "Player 2"}</div>
+                    <div className={`${lastVal.current !== 'O' && 'opacity-60'} text-white font-semibold`}>{difficulty ? difficulty === 'mid'? 'medium' : difficulty === 'imp' ? 'impossible' : difficulty : "Player 2"}</div>
                     <div className='text-white font-bold text-2xl'>{scores[1]}</div>
                 </div>
             </div>

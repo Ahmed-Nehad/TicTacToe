@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Socket } from 'socket.io-client';
 import useSound from 'use-sound';
-import Nav from '../components/Nav';
 import Timer from '../components/Timer';
 import Tiles from './Tiles';
 import FakeTimer from '../components/FakeTimer';
+import { addCoins } from '../hooks/coins';
 
 const endSound = require('../sounds/gameover.mp3');
 const errorSound = require('../sounds/hit.wav');
@@ -19,13 +19,14 @@ type socketData = {
 
 type props = {
     volumeData: [number, React.Dispatch<React.SetStateAction<number>>];
-    setShow: (arg: any, arg2: any) => void;
     playClickSound: any;
     start: boolean;
-    SocketData: socketData
+    SocketData: socketData;
+    losee: () => void;
+    win: ()=> void
 };
 
-const BoardOnline = ({ volumeData, setShow, playClickSound, start, SocketData }: props) => {
+const BoardOnline = ({ volumeData, playClickSound, start, SocketData, losee, win }: props) => {
 
     const [volume] = volumeData;
     const [playErrorSound] = useSound(errorSound, { volume: volume * 0.1 });
@@ -56,6 +57,8 @@ const BoardOnline = ({ volumeData, setShow, playClickSound, start, SocketData }:
     const lose = (player?: string) => {
         canPlay.current = false;
         playGameOverSound();
+        addCoins();
+        win();
         setTimeout(() => {
             if (player) {
                 setScores(prev => { let temp = [...prev]; temp[player === 'X' ? 0 : 1] += 1; return temp });
@@ -131,14 +134,13 @@ const BoardOnline = ({ volumeData, setShow, playClickSound, start, SocketData }:
             <div className='absolute top-0 left-0 z-20 right-0 bottom-[50%] pointer-events-none'>
                 <div className={`${(!!winner.length || board.filter(b => !!b).length === 9) && 'animate-faden'} pointer-events-none opacity-0 text-green-200 font-bold text-4xl absolute left-1/4 right-1/4 text-center`}>{!winner.length ? 'Draw' : `${lastVal.current === "O" ? socketData.name1 : socketData.name2}\n won`}</div>
             </div>
-            <Nav onClick={() => { setShow(false, socketData.socket); }} volumeData={volumeData} playClickSound={playClickSound} />
             <div className='absolute left-0 right-0 top-[13%] mx-auto flex w-[85%] gap-6 justify-center items-center'>
                  <div className={`bg-opacity-40 shadow-xl transition-all ${lastVal.current === 'X' ? 'shadow-blue-700' : ''} bg-black rounded-xl h-24 w-[35vw] pb-[3px] justify-end items-center relative inline-flex flex-col mr-[10vw]`}>
                     <div className="p x"></div>
                     <div className={`${lastVal.current !== 'X' && 'opacity-60'} text-white font-semibold`}>{socketData.name1}</div>
                     <div className='text-white font-bold text-2xl'>{scores[0]}</div>
                 </div>
-                { myturn.current && <Timer disconnect={()=>{setShow(false, socketData.socket);}} className='absolute' children={<></>} /> }
+                { myturn.current && <Timer disconnect={losee} className='absolute' children={<></>} /> }
                 { !myturn.current && <FakeTimer className='absolute' /> }
                 <div className={`bg-opacity-40 bg-black rounded-xl h-24 w-36 shadow-xl transition-all ${lastVal.current === 'O' ? 'shadow-blue-700' : ''} pb-[3px] w-[35vw] justify-end items-center relative inline-flex flex-col`}>
                     <div className="p o"></div>
